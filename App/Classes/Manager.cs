@@ -3,7 +3,7 @@ namespace App.Classes
 {
     class Manager : Account
     {
-        public float Salary { get; private set; }
+        public float Salary { get; set; }
 
         public Manager() : base()
         {
@@ -17,7 +17,7 @@ namespace App.Classes
 
         public override string ToString()
         {
-            return String.Format("{0} {1} Login: {2} Birthday {3}", LastName, Name, Login, Birthday.ToShortDateString());
+            return String.Format("{0} {1} Login: {2} Password: {3} Birthday: {4} Salary: {5}", LastName, Name, Login, Password, Birthday.ToShortDateString(), Salary);
         }
     }
 }

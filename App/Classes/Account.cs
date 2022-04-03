@@ -4,11 +4,11 @@ namespace App.Classes
 {
     class Account
     {
-        public string Name { get; private set; }
-        public string LastName { get; private set; }
-        public string Login { get; private set; }
-        public string Password { get; private set; }
-        public DateTime Birthday { get; private set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public DateTime Birthday { get; set; }
 
         public Account() : this("Default", "Default", "Default", "Default", new DateTime(1990, 1, 1))
         {
@@ -29,6 +29,7 @@ namespace App.Classes
             DateTime age = new DateTime(now.Subtract(Birthday).Ticks);
             return age.Year;
         }
+
 
         public override string ToString()
         {
