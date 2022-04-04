@@ -9,7 +9,8 @@ namespace App.Classes
 
         public Admin(string name, string lastName, string login, string password, DateTime birthday) : base(name, lastName, login, password, birthday)
         {
-            Path = login += ".txt";
+            Path = "Admin_"; 
+            Path += login += ".txt";
         }
 
         public override string ToString()
