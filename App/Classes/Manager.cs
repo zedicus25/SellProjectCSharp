@@ -9,39 +9,105 @@ namespace App.Classes
         public float Salary { get; set; }
         public string Path { get; set; }
 
-        public Manager() : base()
+        public Manager() :this("","","","", new DateTime(1990, 1, 1),1500.0f)
         {
-            SetPath();
-            Salary = 1500.0f;
         }
 
         public Manager(string name, string lastName, string login, string password, DateTime birthday, float salary) : base(name, lastName, login, password, birthday)
         {
-            SetPath();
             Salary = salary;
+            SetPath();
         }
 
         public void AddClient(Client client)
         {
             if (File.Exists("Client_Base.txt"))
-                File.AppendAllText("Client_Base.txt", client.ToString() + "\n");
+            {
+                try
+                {
+                    string dataBaseStr = File.ReadAllText("Client_Base.txt");
+                    string[] dataBase = dataBaseStr.Split('\n');
+                    for (int i = 0; i < dataBase.Length; i++)
+                    {
+                        if (String.Compare(dataBase[i], client.ToString()) == 0)
+                            return;
+                    }
+                    File.AppendAllText("Client_Base.txt", client.ToString() + "\n");
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+            }
             else
-                File.WriteAllText("Client_Base.txt", client.ToString() + "\n");
+            {
+                try
+                {
+                    File.WriteAllText("Client_Base.txt", client.ToString() + "\n");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }     
         }
 
         public void SellProduct(Client client, Product product)
         {
-            //if client has in base, just sell else add client to base and sell 
+            AddClient(client);
+
+            DateTime now = DateTime.Now;
             StringBuilder sb = new StringBuilder();
             sb.Append("Sold: ");
             sb.Append(client.ShortToString() + " ");
             sb.Append("Product: ");
-            sb.Append(product.ToString());
+            sb.Append(product.ToString() + " ");
+            sb.Append("At: ");
+            sb.Append(now.ToString());
 
-            if (File.Exists(Path)) 
-                File.AppendAllText(Path, sb.ToString() + "\n");
+            if (File.Exists(Path))
+            {
+                try
+                {
+                    File.AppendAllText(Path, sb.ToString() + "\n");
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+            }
             else
-                File.WriteAllText(Path, sb.ToString() + "\n");
+            {
+                try
+                {
+                    File.WriteAllText(Path, sb.ToString() + "\n");
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public string GetSellsHistory()
+        {
+            string history = "";
+            if (File.Exists(Path))
+            {
+                try
+                {
+                    history = File.ReadAllText(Path);
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return history;
         }
 
         public override string ToString()

@@ -6,9 +6,8 @@ namespace App.Classes
     {
         public string PhoneNumber { get; set; }
 
-        public Client() : base()
+        public Client() : this("","","","",new DateTime(1990,1,1),"")
         {
-            PhoneNumber = "";
         }
 
         public Client(string name, string lastName, string login, string password, DateTime birthday, string number) : base(name, lastName, login, password, birthday)
